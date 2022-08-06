@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    password: ''
+  h2:
+    console:
+      enabled: true
+      path: /db
+  jpa:
+    database-platform: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+CoolSMS:
+  public_key: 'your_public_key'
+  secret_key: 'your_secret_key'
+  sender: 'your sender'
