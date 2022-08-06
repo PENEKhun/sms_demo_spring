@@ -19,9 +19,13 @@ public class AuthSecurityUtil {
     private final PhoneAuthLogRepository phoneAuthLogRepository;
 
     public boolean checkAuthAttemptsExceededByIP(String ip) {
-        LocalDateTime today = LocalDateTime.now();
-        long attempts = phoneAuthLogRepository.countByIpAndCreateDateEquals(ip, today);
-        return attempts > 3;
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime today_begin = LocalDateTime.of(now.getYear(),
+                now.getMonth(), now.getDayOfMonth(), 0, 0, 0);
+        LocalDateTime today_end = LocalDateTime.of(now.getYear(),
+                now.getMonth(), now.getDayOfMonth(), 23, 59, 59);
+        long attempts = phoneAuthLogRepository.countByIpAndCreateDateBetween(ip, today_begin, today_end);
+        return attempts >= 3;
     }
 
     public String getClientIP(HttpServletRequest request){
